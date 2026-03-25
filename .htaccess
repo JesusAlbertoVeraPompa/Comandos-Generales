@@ -1,0 +1,15 @@
+# Desactivar la navegación por directorios
+Options -Indexes
+
+# Establecer la página de inicio predeterminada
+DirectoryIndex index.html
+
+# Activar el motor de redirección
+RewriteEngine On
+
+# Forzar HTTPS (Recomendado para seguridad)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Manejo de errores 404 (opcional, redirige al index)
+ErrorDocument 404 /index.html

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Comandos</title>
+    <link rel="icon" type="image/svg+xml" href="icono.png" />
+  </head>
+
+  <body>
+    <div class="min-h-screen flex flex-col bg-black">
+      <div class="grid grid-cols-1 md:grid-cols-3" id="contenedor"></div>
+    </div>
+
+    <script>
+      // 📦 DATA (ESCALABLE)
+      const comandos = {
+        Git: {
+          icono:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+          lista: [
+            "git init",
+            "git add .",
+            'git commit -m \"message commit\"',
+            "git branch -M main",
+            "git remote add origin https://github.com/usuario/repositorio.git",
+            "git push -u origin main",
+          ],
+        },
+        React: {
+          icono: "react.png",
+          lista: ["npm run dev -- --host"],
+        },
+        ReactNativeCLI: {
+          icono: "react-native.png",
+          lista: [
+            "npx @react-native-community/cli@15 init NombreProyecto --version 0.76.5",
+            "npx react-native doctor",
+            "npx react-native run-android",
+            "Remove-Item -Recurse -Force node_modules",
+            "Remove-Item -Force package-lock.json",
+            "npm cache clean --force",
+            "npm install",
+            "cd android",
+            ".\gradlew.bat clean",
+            ".\gradlew.bat assembleRelease",
+          ],
+        },
+        Django: {
+          icono: "django.png",
+          lista: [
+            "Get-ChildItem -Path . -Include __pycache__ -Recurse -Force | Remove-Item -Recurse -Force",
+          ],
+        },
+      };
+
+      const contenedor = document.getElementById("contenedor");
+
+      // 🎨 RENDER DINÁMICO
+      Object.keys(comandos).forEach((categoria) => {
+        const data = comandos[categoria];
+
+        const card = document.createElement("div");
+        card.className =
+          "text-white  bg-zinc-800/50 p-2 m-1 rounded-md bg-blue-500 shadow-lg shadow-blue-500/50 inset-shadow-sm inset-shadow-blue-500";
+
+        card.innerHTML = `
+          <div class="flex justify-between items-center p-2">
+            <h2 class="font-bold text-lg">${categoria}</h2>
+            <img src="${data.icono}" class="w-[40px]" alt="${categoria}">
+          </div>
+        `;
+
+        data.lista.forEach((cmd) => {
+          const item = document.createElement("div");
+          item.className =
+            "flex m-1 p-2 bg-zinc-800 justify-between items-center rounded-md";
+
+          item.innerHTML = `
+            <p class="text-sm">${cmd}</p>
+            <button class="btnCopiar" style="cursor:pointer; border:none; background:none;">
+              <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12V1zm3 4H8c-1.1 
+                0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 
+                2-.9 2-2V7c0-1.1-.9-2-2-2zm0 
+                16H8V7h11v14z"/>
+              </svg>
+            </button>
+          `;
+
+          card.appendChild(item);
+        });
+
+        contenedor.appendChild(card);
+      });
+
+      // ⚡ COPY + CAMBIO DE ICONO
+      document.addEventListener("click", function (e) {
+        if (e.target.closest(".btnCopiar")) {
+          const boton = e.target.closest(".btnCopiar");
+          const contenedorItem = boton.parentElement;
+          const texto = contenedorItem.querySelector("p").innerText;
+          const icono = boton.querySelector("svg");
+
+          navigator.clipboard
+            .writeText(texto)
+            .then(() => {
+              icono.innerHTML = `
+              <path fill="lime" d="M9 16.2l-3.5-3.5L4 
+              14.2l5 5 12-12-1.5-1.5z"/>
+            `;
+
+              setTimeout(() => {
+                icono.innerHTML = `
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12V1zm3 4H8c-1.1 
+                0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 
+                2-.9 2-2V7c0-1.1-.9-2-2-2zm0 
+                16H8V7h11v14z"/>
+              `;
+              }, 2000);
+            })
+            .catch((err) => {
+              console.error("Error al copiar: ", err);
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
