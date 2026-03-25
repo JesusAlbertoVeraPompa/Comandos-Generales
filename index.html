@@ -30,7 +30,32 @@
         },
         React: {
           icono: "react.png",
-          lista: ["npm run dev -- --host"],
+          lista: [
+            "npm create vite@latest -- --template ",
+            "npm install",
+            "npm install react-router-dom",
+            "npm install @reduxjs/toolkit react-redux",
+            "npm install axios",
+            "npm install -D tailwindcss@3 postcss autoprefixer",
+            "npx tailwindcss init -p",
+            "npm i @material-tailwind/react",
+            `const withMT = require("@material-tailwind/react/utils/withMT");
+
+                module.exports = withMT({
+                darkMode: "class",
+                content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+                theme: {
+                    extend: {},
+                },
+                plugins: [],
+                });`,
+            `@tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+            `,
+            "npm run dev -- --host",
+            "npm run build",
+          ],
         },
         ReactNativeCLI: {
           icono: "react-native.png",
@@ -51,6 +76,14 @@
           icono: "django.png",
           lista: [
             "Get-ChildItem -Path . -Include __pycache__ -Recurse -Force | Remove-Item -Recurse -Force",
+            "python -m venv venv",
+            "venv\Scripts\activate",
+            "django-admin startproject config .",
+            "python manage.py startapp usuarios apps/usuarios",
+            "python manage.py startapp productos apps/productos",
+            "python manage.py makemigrations",
+            "python manage.py migrate",
+            "python manage.py collectstatic",
           ],
         },
       };
